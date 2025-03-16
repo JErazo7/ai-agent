@@ -15,9 +15,4 @@ class AgentRepositoryImpl implements AgentRepository {
   Future<String> greet(String name) async {
     return await _dataSource.greet(name);
   }
-
-  @override
-  Future<void> dispose() async {
-    await _dataSource.dispose();
-  }
 }

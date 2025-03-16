@@ -39,6 +39,8 @@ class _HomePageState extends State<HomePage> {
           _greeting = result;
         });
       } catch (e) {
+        if (!mounted) return;
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: $e')),
         );
@@ -49,7 +51,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _nameController.dispose();
-    _repository.dispose();
     super.dispose();
   }
 

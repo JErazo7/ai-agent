@@ -4,7 +4,4 @@ abstract class AgentRepository {
 
   /// Send a greeting message to the agent and wait for its response
   Future<String> greet(String name);
-
-  /// End the agent session
-  Future<void> dispose();
 }
