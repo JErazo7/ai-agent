@@ -1,4 +1,4 @@
-class CanisterConfig {
+mixin CanisterConfig {
   static const String _localHost = 'http://127.0.0.1:4943';
   static const String _localCanisterId = 'bkyz2-fmaaa-aaaaa-qaaaq-cai';
 

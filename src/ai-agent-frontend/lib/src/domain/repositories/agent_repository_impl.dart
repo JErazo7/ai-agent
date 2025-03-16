@@ -1,5 +1,5 @@
-import '../../data/datasources/agent_datasource.dart';
-import 'agent_repository.dart';
+import 'package:frontend/src/data/datasources/agent_datasource.dart';
+import 'package:frontend/src/domain/repositories/agent_repository.dart';
 
 class AgentRepositoryImpl implements AgentRepository {
   final AgentDataSource _dataSource;
@@ -13,6 +13,6 @@ class AgentRepositoryImpl implements AgentRepository {
 
   @override
   Future<String> greet(String name) async {
-    return await _dataSource.greet(name);
+    return _dataSource.greet(name);
   }
 }

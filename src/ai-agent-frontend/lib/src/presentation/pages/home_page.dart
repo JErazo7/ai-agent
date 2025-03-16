@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../data/datasources/agent_datasource.dart';
-import '../../domain/repositories/agent_repository.dart';
-import '../../domain/repositories/agent_repository_impl.dart';
+import 'package:frontend/src/data/datasources/agent_datasource.dart';
+import 'package:frontend/src/domain/repositories/agent_repository.dart';
+import 'package:frontend/src/domain/repositories/agent_repository_impl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,9 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _repository = AgentRepositoryImpl(
-      AgentDataSource(isTestnet: false),
-    );
+    _repository = AgentRepositoryImpl(AgentDataSource());
     _initializeAgent();
   }
 
