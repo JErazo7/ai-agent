@@ -3,8 +3,7 @@ import 'dart:typed_data';
 import '../../config/canister_config.dart';
 
 class AgentDataSource {
-  late final HttpAgent _agent;
-  late final Principal _canisterId;
+  late final AgentFactory _agent;
   bool _isInitialized = false;
   final bool _isTestnet;
 
@@ -15,23 +14,19 @@ class AgentDataSource {
 
     print('Initializing agent with host: ${CanisterConfig.host}');
 
-    // Initialize HTTP agent with the correct host
-    _agent = HttpAgent.fromUri(
-      Uri.parse(CanisterConfig.host),
-      options: HttpAgentOptions(
-        host: CanisterConfig.host,
-      ),
-    );
-
-    // Only fetch root key in testnet
-    if (_isTestnet) {
-      print('Fetching root key for testnet...');
-      await _agent.fetchRootKey();
+    try {
+      // Initialize HTTP agent with the correct host
+      _agent = await AgentFactory.createAgent(
+        canisterId: CanisterConfig.canisterId,
+        url: CanisterConfig.host,
+        idl: IDL.Service({
+          'greet': IDL.Func([IDL.Text], [IDL.Text], ['query'])
+        }),
+      );
+    } catch (e) {
+      print('Error initializing agent: $e');
+      throw Exception('Error initializing agent: $e');
     }
-
-    // Initialize canister ID from config
-    _canisterId = Principal.fromText(CanisterConfig.canisterId);
-    print('Canister ID: ${_canisterId.toText()}');
 
     _isInitialized = true;
     print('Agent initialized successfully');
@@ -44,16 +39,8 @@ class AgentDataSource {
 
     try {
       print('Calling greet method with name: $name');
-      final result = await _agent.query(
-        _canisterId,
-        QueryFields(
-          methodName: 'greet',
-          arg: Uint8List.fromList(name.codeUnits),
-        ),
-        null,
-      );
-      print('Greet result: $result');
-      return result.toString();
+      final result = await _agent.actor!.getFunc('greet')!.call([name]);
+      return result;
     } catch (e) {
       print('Error in greet method: $e');
       throw Exception('Error greeting: $e');
