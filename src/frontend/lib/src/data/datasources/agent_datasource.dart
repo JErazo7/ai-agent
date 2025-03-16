@@ -28,7 +28,7 @@ class AgentDataSource {
     _isInitialized = true;
   }
 
-  Future<String> getAgentState() async {
+  Future<String> greet(String name) async {
     if (!_isInitialized) {
       throw StateError('Agent not initialized');
     }
@@ -37,34 +37,14 @@ class AgentDataSource {
       final result = await _agent.query(
         _canisterId,
         QueryFields(
-          methodName: 'get_state',
-          arg: Uint8List(0), // Empty Uint8List for no arguments
+          methodName: 'greet',
+          arg: Uint8List.fromList(name.codeUnits),
         ),
         null, // identity parameter
       );
       return result.toString();
     } catch (e) {
-      throw Exception('Error getting agent state: $e');
-    }
-  }
-
-  Future<String> sendMessage(String message) async {
-    if (!_isInitialized) {
-      throw StateError('Agent not initialized');
-    }
-
-    try {
-      final result = await _agent.callRequest(
-        _canisterId,
-        CallOptions(
-          methodName: 'send_message',
-          arg: Uint8List.fromList(message.codeUnits),
-        ),
-        null, // identity parameter
-      );
-      return result.toString();
-    } catch (e) {
-      throw Exception('Error sending message: $e');
+      throw Exception('Error greeting: $e');
     }
   }
 
