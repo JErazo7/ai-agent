@@ -9,10 +9,9 @@
         "ai-agent-backend"
       ],
       "source": [
-        "src/ai-agent-frontend/dist"
+        "src/frontend/build/web"
       ],
-      "type": "assets",
-      "workspace": "ai-agent-frontend"
+      "type": "assets"
     }
   },
   "defaults": {
