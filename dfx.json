@@ -8,8 +8,11 @@
       "dependencies": [
         "ai-agent-backend"
       ],
+      "frontend": {
+        "entrypoint": "src/ai-agent-frontend/build/web/index.html"
+      },
       "source": [
-        "src/frontend/build/web"
+        "src/ai-agent-frontend/build/web"
       ],
       "type": "assets"
     }

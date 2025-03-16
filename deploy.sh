@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Construir el frontend de Flutter
-cd src/frontend
+cd src/ai-agent-frontend
 fvm flutter build web --release
 cd ../..
 
